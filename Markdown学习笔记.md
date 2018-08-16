@@ -107,10 +107,12 @@ draft = false
 举例：  
 
     这是[我的主页][1]
+    
     [1]:http://www.zealllot.com/ "zealllot's blog"
 效果：  
 
 这是[我的主页][1]  
+
 [1]:http://www.zealllot.com/ "zealllot's blog"  
 
 ### 强调

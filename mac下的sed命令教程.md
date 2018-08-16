@@ -89,7 +89,7 @@ sed全名叫stream editor，流编辑器，用程序的方式来编辑文本。s
     Third sentence.
     Fourth sentence.
     
-### 字符串替换
+#### 字符串替换
 同样使用上面的示例文件，我们把*sentence*替换为*line*。字符串替换的表达式为`s/被替换的内容/替换的内容/`。替换的表达式就不需要像插入一样，不需要换行了。  
 
     $ sed -i '.bak' 's/sentence/line/' file  
