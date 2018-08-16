@@ -27,7 +27,7 @@ sed全名叫stream editor，流编辑器，用程序的方式来编辑文本。s
     Second sentence.
     Third sentence.
     Fourth sentence.
-#### 插入  
+#### 插入一行  
 在第一行插入`hello`,并且保存备份文件后缀为`.bak`。在第一行插入的表达式为`1i\`，注意这里必须要'反斜杠'，并且需要插入的语句要换行写，否则会报语法错误:`extra characters after \ at the end of i command`。  
 
     $ sed -i '.bak' '1i\
@@ -74,8 +74,25 @@ sed全名叫stream editor，流编辑器，用程序的方式来编辑文本。s
     hello
     hello
     ": extra characters at the end of h command
-那么，如何插入多行？我们可以使用换行符。不像传统的`\n`作为换行符，Linux版的sed可以使用`\n`，但是mac版需要使用`\'$'\n`。  
+    
+#### 字符串替换
+同样使用上面的示例文件，我们把*sentence*替换为*line*。字符串替换的表达式为`s/被替换的内容/替换的内容/`。替换的表达式就不需要像插入一样，不需要换行了。  
 
+    $ sed -i '.bak' 's/sentence/line/g' file  
+这里表达式最后的那个g就是正则表达式中的g，global，全局匹配的意思。
+查看效果  
+
+    $ cat file
+    First line.
+    Second line.
+    Third line.
+    Fourth line.  
+更多替换命令的详解，可以查看[左耳朵耗子的博客][]，他对sed命令的讲解是我见过最直观，最简洁明了的。  
+
+[左耳朵耗子的博客]:https://coolshell.cn/articles/9104.html "左耳朵耗子的博客"  
+#### 插入多行
+前面，我们说到了插入一行。那么，如何插入多行？我们可以使用换行符。不像传统的`\n`作为换行符，Linux版的sed可以使用`\n`，但是mac版需要使用`\'$'\n`。  
+             
     $ sed -i '.bak' '1i\
     insert 1\'$'\ninsert 2
     ' file
@@ -88,18 +105,31 @@ sed全名叫stream editor，流编辑器，用程序的方式来编辑文本。s
     Second sentence.
     Third sentence.
     Fourth sentence.
+经过试验，发现如果要插入两行以上，直接用换行符的方法又失效了。mac版的sed实在是不按常理出牌。  
+但是，利用替换的方法，替换成换行符又是可以成功有多个换行的。
+先将要插入的并成一行，并且用`;`隔开
     
-#### 字符串替换
-同样使用上面的示例文件，我们把*sentence*替换为*line*。字符串替换的表达式为`s/被替换的内容/替换的内容/`。替换的表达式就不需要像插入一样，不需要换行了。  
-
-    $ sed -i '.bak' 's/sentence/line/' file  
-查看效果  
+    $ sed -i '.bak' '1i\
+    insert 1;insert 2;insert3
+    ' file
+效果  
 
     $ cat file
-    First line.
-    Second line.
-    Third line.
-    Fourth line.  
-更多替换命令的详解，可以查看[左耳朵耗子的博客][]，他对sed命令的讲解是我见过最直观，最简洁明了的。  
+    insert 1;insert 2;insert 3
+    First sentence.
+    Second sentence.
+    Third sentence.
+    Fourth sentence.
+然后将`；`替换成`\'$'\n`  
 
-[左耳朵耗子的博客]:https://coolshell.cn/articles/9104.html "左耳朵耗子的博客"
+    $ sed -i '.bak' '1 s/;/\'$'\n/g' file 
+效果
+
+    $ cat file
+    insert 1
+    insert 2
+    insert 3
+    First sentence.
+    Second sentence.
+    Third sentence.
+    Fourth sentence.
