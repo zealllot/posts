@@ -10,10 +10,12 @@ draft = false
 既然别人帮不了我，那就只能自己帮自己。怎样才可以不被运营商流量劫持呢？答案是使用`https`协议。
 ## https简介
 引用wiki的话:  
->Hypertext Transfer Protocol Secure (HTTPS) is an extension of the Hypertext Transfer Protocol (HTTP) for secure communication over a computer network, and is widely used on the Internet.[1][2] In HTTPS, the communication protocol is encrypted using Transport Layer Security (TLS), or formerly, its predecessor, Secure Sockets Layer (SSL). The protocol is therefore also often referred to as HTTP over TLS,[3] or HTTP over SSL.
 
-https和http的区别:
->HTTPS URLs begin with "https://" and use port 443 by default, where as HTTP URLs begin with "http://" and use port 80 by default.HTTP is not encrypted and is vulnerable to man-in-the-middle and eavesdropping attacks, which can let attackers gain access to website accounts and sensitive information, and modify webpages to inject malware or advertisements. HTTPS is designed to withstand such attacks and is considered secure against them (with the exception of older, deprecated versions of SSL).
+> Hypertext Transfer Protocol Secure (HTTPS) is an extension of the Hypertext Transfer Protocol (HTTP) for secure communication over a computer network, and is widely used on the Internet.[1][2] In HTTPS, the communication protocol is encrypted using Transport Layer Security (TLS), or formerly, its predecessor, Secure Sockets Layer (SSL). The protocol is therefore also often referred to as HTTP over TLS,[3] or HTTP over SSL.
+
+https和http的区别:  
+
+> HTTPS URLs begin with "https://" and use port 443 by default, where as HTTP URLs begin with "http://" and use port 80 by default.HTTP is not encrypted and is vulnerable to man-in-the-middle and eavesdropping attacks, which can let attackers gain access to website accounts and sensitive information, and modify webpages to inject malware or advertisements. HTTPS is designed to withstand such attacks and is considered secure against them (with the exception of older, deprecated versions of SSL).
     
 https最主要的功能是对http的明文信息进行了加密，使得传输的信息不易被泄露、劫持。  
 ## https实现  

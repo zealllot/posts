@@ -64,12 +64,13 @@ supervisor是Unix-like系统中的一个进程管理工具。它可以在进程�
     startsecs = 5                                                                   ;设成5秒表示，supervisor启动程序5秒并成功运行后，才可以认为程序start成功
     user = root                                                                     ;运行程序的用户
     redirect_stderr=true                                                            ;log redirect
-    stdout_logfile = /root/test/log                                                 ;log 存放地址  
+    stdout_logfile = /root/test/blog.log                                            ;log 存放地址  
 更多进程管理配置的解释请看[官方文档][]
 
 [官方文档]:http://supervisord.org/configuration.html#program-x-section-values "supervisor官方文档"
 ### 进程管理
-当配置文件准备结束后就可以启动进程了。
+当配置文件准备结束后就可以启动进程了。  
+
 * supervisord，初始启动 Supervisord，启动、管理配置中设置的进程。
 * supervisorctl stop blog，停止blog进程.
 * supervisorctl start blog，启动blog进程
@@ -186,8 +187,11 @@ tools安装完之后会有两个命令，`inotifywait`和`inotifywatch`，这里
     root@VM-0-11-ubuntu:~# cat watch.sh
     #!/bin/sh
     
-    inotifywait -e modify,attrib,move,create,delete,delete_self,unmount -d -outfile watchlog -r content/ | while read event; do
+    inotifywait -e modify,attrib,move,create,delete,delete_self,unmount -m -r content/ | while read event; do
         supervisorctl restart blog
+        time=`date '+%Y-%m-%d %H:%M:%S'`
+        echo $time
+        echo
     done
 现在，我的服务器就可以自动监测`content`目录下的改动，并自动重启blog服务了。  
 最后，再把我的监控程序也放进`supervisor`进行进程管理  
@@ -202,5 +206,7 @@ tools安装完之后会有两个命令，`inotifywait`和`inotifywatch`，这里
     autorestart=true
     startsecs = 5
     user = root
+    redirect_stderr=true
+    stdout_logfile = /root/test/watch.log
 然后执行`supervisorctl update`。至此，我的博客系统增加了监控重启功能，又增强了可用性。
     
